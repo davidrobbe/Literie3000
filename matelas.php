@@ -9,11 +9,11 @@ if (isset($_GET["id"])) {
     $dsn = "mysql:host=localhost;dbname=literie3000";
     $db = new PDO($dsn, "root", "");
 
-    //1/ On prépare la requete SQL avec un parametre pour palier a l'injection SQL
+    // On prépare la requete SQL avec un parametre pour palier a l'injection SQL
     $query = $db->prepare("SELECT * FROM matelas WHERE id = :id");
-    //2/ On donne des valeurs a nos parametres
+    // On donne des valeurs a nos parametres
     $query->bindParam(":id", $_GET["id"], PDO::PARAM_INT);
-    //3/ On execute notre requete préalablement préparée
+    // On execute notre requete préalablement préparée
     $query->execute();
     $matelas = $query->fetch(); // retourne un tableau associatif du matelas concerné ou false si pas de correspondance
     

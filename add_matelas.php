@@ -67,7 +67,7 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-    <h1>Ajouter un matelas</h1>
+    <h2>Ajouter un matelas</h2>
 
     <!-- Lorsque l'attribut action est vide, les données du formulaire sont envoyées à la même page -->
     <form action="" method="post" enctype="multipart/form-data">
