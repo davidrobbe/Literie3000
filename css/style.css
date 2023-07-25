@@ -7,9 +7,13 @@
   }
   
   body {
-    font-size: 1.6rem;
-    background-color: #FFCD4C;
-  }
+    background-color: #FFCD4C; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Centrer le formulaire verticalement */
+    margin: 0;
+}
 
   .logo-wrapper {
     text-align: center;
@@ -59,45 +63,24 @@ h1{
   font-size: 20px;
   padding-left: 75px;
   color: #0C4085;
-  
 }
 
 
-.form-container {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.btn-literie3000 {
+  display: block;
+  margin: 0 auto; 
+  margin-top: 10px;
 }
 
 .form-group {
-  flex: 1;
-  margin-bottom: 10px;
-  text-align: center; /* Centrer le contenu dans chaque groupe */
-}
-
-.form-group label {
-  display: block; /* Permet de placer chaque label sur une ligne séparée */
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 50%; /* Pour que les champs de saisie occupent toute la largeur disponible */
-  padding: 5px; /* Espace interne du champ de saisie */
-}
-
-
-
-.form-container {
+  margin-bottom: 10px; 
+  background-color: #0C4085;
+  color: #FFCD4C;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
   display: flex;
-  justify-content: center; /* Centre horizontalement le contenu du formulaire */
-  align-items: center; /* Centre verticalement le contenu du formulaire */
-  height: 100vh; /* Remplit toute la hauteur de la page */
+  flex-direction: column; 
+  font-size: 15px;
 }
-
-
-

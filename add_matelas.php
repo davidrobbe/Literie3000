@@ -63,7 +63,7 @@ if (!empty($_POST)) {
 
 <head>
     <title>Ajouter un matelas</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
