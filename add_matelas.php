@@ -14,7 +14,7 @@ if (!empty($_POST)) {
 
     // Gestion de l'upload de l'image du matelas 
     if (!empty($_FILES['image']['tmp_name'])) {
-        // Chemin où vous souhaitez enregistrer les images téléchargées
+        
         $uploadDirectory = 'img/';
 
         // Obtenez le nom du fichier téléchargé
@@ -50,7 +50,7 @@ if (!empty($_POST)) {
         $query->bindParam(":image_url", $imageUrl); // Utilisation de la variable contenant le chemin de l'image
 
         if ($query->execute()) {
-            // Redirection vers la page principale après l'ajout du matelas
+
             header("Location: index.php");
             exit();
         }
@@ -67,9 +67,10 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-    <h2>Ajouter un matelas</h2>
+<?php include("templates/header.php"); ?>
+    <h1>Ajouter un matelas</h1>
 
-    <!-- Lorsque l'attribut action est vide, les données du formulaire sont envoyées à la même page -->
+  
     <form action="" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="inputMarque">Marque :</label>
@@ -94,6 +95,7 @@ if (!empty($_POST)) {
         <div class="form-group">
             <label for="inputImage">Photo du matelas :</label>
             <input type="file" id="inputImage" name="image">
+
             <!-- Affichage des erreurs -->
             <?php if (isset($error["picture"])) : ?>
                 <span class="info-error"><?= $error["picture"] ?></span>

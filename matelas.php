@@ -24,7 +24,7 @@ if (isset($_GET["id"])) {
     }
 }
 
-// Inclure le template header
+
 include("templates/header.php");
 ?>
 <h1><?= $data["name"] ?></h1>
@@ -39,6 +39,6 @@ if ($find) {
 <?php
 }
 
-// Inclure le template footer
+
 include("templates/footer.php");
 ?>
