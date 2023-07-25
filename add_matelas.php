@@ -1,31 +1,44 @@
 <?php
-include("templates/header.php");
 
-$error = [];
 
 if (!empty($_POST)) {
-    // Le formulaire est envoyé !
-    // Utilisation de la fonction strip_tags pour supprimer d'éventuelles balises HTML
-    // qui se seraient glissées dans les champs input et pallier à la faille XSS
-    // Utilisation de la fonction trim pour supprimer d'éventuels espaces en début et fin de chaîne
+    $dsn = "mysql:host=localhost;dbname=literie3000";
+    $db = new PDO($dsn, "root", "");
+
     $marque = trim(strip_tags($_POST["marque"]));
     $nom = trim(strip_tags($_POST["nom"]));
     $taille = trim(strip_tags($_POST["taille"]));
     $prixNormale = trim(strip_tags($_POST["prix_normale"]));
     $prixSolde = trim(strip_tags($_POST["prix_solde"]));
-    $imageUrl = "chemin/vers/image.jpg"; // Ici, vous devez gérer l'upload de l'image du matelas de la même manière que pour la recette
+    $imageUrl = ""; // Variable pour stocker le chemin de l'image après le téléchargement
+
+    // Gestion de l'upload de l'image du matelas 
+    if (!empty($_FILES['image']['tmp_name'])) {
+        // Chemin où vous souhaitez enregistrer les images téléchargées
+        $uploadDirectory = 'img/';
+
+        // Obtenez le nom du fichier téléchargé
+        $uploadedFileName = basename($_FILES['image']['name']);
+
+        // Construisez le chemin complet où l'image sera enregistrée
+        $targetPath = $uploadDirectory . $uploadedFileName;
+
+        // Déplacez l'image téléchargée vers le répertoire cible
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+            // Le téléchargement a réussi, mettez à jour la variable $imageUrl avec le chemin de l'image
+            $imageUrl = $targetPath;
+        } else {
+            // Le téléchargement de l'image a échoué, vous pouvez gérer l'erreur ici si nécessaire
+            $error["picture"] = "Erreur lors du téléchargement de l'image.";
+        }
+    }
 
     if (empty($marque) || empty($nom) || empty($taille) || empty($prixNormale) || empty($prixSolde)) {
         $error["fields"] = "Tous les champs sont obligatoires.";
     }
 
-    // Gestion de l'upload de l'image du matelas 
-
     // Requête d'insertion en BDD du matelas s'il n'y a aucune erreur
     if (empty($error)) {
-        $dsn = "mysql:host=localhost;dbname=literie3000";
-        $db = new PDO($dsn, "root", "");
-
         $query = $db->prepare("INSERT INTO matelas (marque, nom, taille, prix_normale, prix_solde, image_url)
                                VALUES (:marque, :nom, :taille, :prix_normale, :prix_solde, :image_url)");
 
@@ -34,12 +47,12 @@ if (!empty($_POST)) {
         $query->bindParam(":taille", $taille);
         $query->bindParam(":prix_normale", $prixNormale);
         $query->bindParam(":prix_solde", $prixSolde);
-        $query->bindParam(":image_url", $imageUrl); // Remplacez cette valeur par l'URL de l'image du matelas
+        $query->bindParam(":image_url", $imageUrl); // Utilisation de la variable contenant le chemin de l'image
 
         if ($query->execute()) {
-            // La requête s'est bien déroulée, on redirige l'utilisateur vers la page d'accueil
+            // Redirection vers la page principale après l'ajout du matelas
             header("Location: index.php");
-            exit(); // N'oubliez pas d'ajouter cette ligne pour arrêter l'exécution du script après la redirection
+            exit();
         }
     }
 }
@@ -80,7 +93,7 @@ if (!empty($_POST)) {
         </div>
         <div class="form-group">
             <label for="inputImage">Photo du matelas :</label>
-            <input type="file" id="inputImage" name="image"> <!-- Remplacez le name par "image" pour gérer l'upload -->
+            <input type="file" id="inputImage" name="image">
             <!-- Affichage des erreurs -->
             <?php if (isset($error["picture"])) : ?>
                 <span class="info-error"><?= $error["picture"] ?></span>

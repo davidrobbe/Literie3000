@@ -22,6 +22,8 @@ include("templates/header.php");
             <p>Taille : <?= $m["taille"] ?></p>
             <p>Prix normal : <?= $m["prix_normale"] ?> €</p>
             <p>Prix soldé : <?= $m["prix_solde"] ?> €</p>
+            <!-- Lien pour supprimer le matelas -->
+            <a href="supprimer_matelas.php?id=<?= $m['id'] ?>" class="btn-supprimer">Supprimer</a>
         </div>
     <?php
     }
